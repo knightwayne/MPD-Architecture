@@ -8,10 +8,9 @@
 
 int main(int argc, char const *argv[]) 
 { 
-	int sock = 0, valread; 
+	int sock = 0; 
 	struct sockaddr_in serv_addr; 
-	char *hello = "Hello from client"; 
-	char buffer[1024] = {0}; 
+
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
 	{ 
 		printf("\n Socket creation error \n"); 
@@ -33,9 +32,33 @@ int main(int argc, char const *argv[])
 		printf("\nConnection Failed \n"); 
 		return -1; 
 	} 
-	send(sock , hello , strlen(hello) , 0 ); 
-	printf("Hello message sent\n"); 
-	valread = read( sock , buffer, 1024); 
-	printf("%s\n",buffer ); 
+	 
+	
+	
+	char *nok="not valid command";
+	while(1)
+	{
+		int n;
+		char buffer[256];
+		
+		printf("Please enter the message: ");
+		bzero(buffer,256);
+		fgets(buffer,255,stdin);
+		n = write(sock,buffer,strlen(buffer));
+		if (n < 0) 
+			printf("ERROR writing to socket");
+		else
+			printf("Message sent\n");
+	
+		bzero(buffer,256);
+		n = read(sock,buffer,255);
+		if (n < 0) 
+			printf("ERROR reading from socket");
+		else
+			printf("%s\n",buffer);
+		
+		if(buffer==nok)
+		break;
+	}
 	return 0; 
 } 

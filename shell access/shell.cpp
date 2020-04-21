@@ -4,7 +4,9 @@ using namespace std;
 
 int main()
 {
-    system("vlc");
+    char inp[100];
+    cin.getline(inp,100);
+    system(inp);
     
     return 0;
 }
