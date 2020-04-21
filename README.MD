@@ -28,7 +28,8 @@ MPD Architecture & Simple C Server-Client Program for VLC command parsing
 
 Starting the MPD Server
 
-![](./images/StartMPD.png)*   Step 5: Using mpc-clients, send requests to the server.
+![](./images/StartMPD.png)  
+*   Step 5: Using mpc-clients, send requests to the server.
 *   Step 6: With due command processing, actions would take place, like play, pause, random, etc.
 *   Step 7: Stop the server to kill the thread.
 
