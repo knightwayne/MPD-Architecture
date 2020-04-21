@@ -1,10 +1,13 @@
 MPD Architecture & Simple C Server-Client Program for VLC command parsing
 =========================================================================
 
+This repository contains supplement files for the [VLC MPD Server Proposal](https://docs.google.com/document/d/1HHBeUhZwo73mbgj_cNPHwifbSYW9LP9x_NRQUlRTvKY/edit?usp=sharing).
+
 ### Code - C/C++ Files
 
 *   [Server-Client Folder](./server-client/) contains a simple socket programme for Client and Socket in C language. At this time, we can send and recive basic commands like `vlc`, `vlc --version`, `vlc --help` from client, and it would be parsed and executed in server.
-*   [Shell Access Folder](./shell access/) contains a simple C++ programme to access shell from a C++ file, in Ubuntu.
+  
+*   [Shell Access Folder](./shell_access/) contains a simple C++ programme to access shell from a C++ file, in Ubuntu.
 
 ### MPD Architecture
 
