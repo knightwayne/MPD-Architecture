@@ -1,9 +1,8 @@
-// Client side C/C++ program to demonstrate Socket programming 
 #include <stdio.h> 
+#include <string.h> 
 #include <sys/socket.h> 
 #include <arpa/inet.h> 
 #include <unistd.h> 
-#include <string.h> 
 #define PORT 8080 
 
 int main(int argc, char const *argv[]) 
@@ -33,15 +32,15 @@ int main(int argc, char const *argv[])
 		return -1; 
 	} 
 	 
-	
-	
+	//Parsing
 	char *nok="not valid command";
 	while(1)
 	{
 		int n;
 		char buffer[256];
 		
-		printf("Please enter the message: ");
+		//Recieve
+		printf("Please enter the command: ");
 		bzero(buffer,256);
 		fgets(buffer,255,stdin);
 		n = write(sock,buffer,strlen(buffer));
@@ -49,16 +48,21 @@ int main(int argc, char const *argv[])
 			printf("ERROR writing to socket");
 		else
 			printf("Message sent\n");
-	
+
+		//Send	
 		bzero(buffer,256);
 		n = read(sock,buffer,255);
 		if (n < 0) 
 			printf("ERROR reading from socket");
 		else
 			printf("%s\n",buffer);
-		
-		if(buffer==nok)
-		break;
+
+		if(!strcmp(buffer,nok))
+		{
+			printf("Invalid Command, Terminating\n");
+			break;
+		}
 	}
+
 	return 0; 
 } 

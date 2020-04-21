@@ -1,11 +1,11 @@
-// Server side C/C++ program to demonstrate Socket programming 
-#include <unistd.h> 
 #include <stdio.h> 
-#include <sys/socket.h> 
-#include <stdlib.h> 
+#include <string.h>
+#include <sys/socket.h>
 #include <netinet/in.h> 
-#include <string.h> 
+#include <unistd.h> 
+#include <stdlib.h> 
 #define PORT 8080 
+
 int main(int argc, char const *argv[]) 
 { 
 	int server_fd, new_socket; 
@@ -50,9 +50,8 @@ int main(int argc, char const *argv[])
 		exit(EXIT_FAILURE); 
 	} 
 	
-	
-	//char vlc[4]={'v','l','c','\0'} , vlcv[14]={'v','l','c',' ','-','-','v','e','r','s','i','o','n','\0'};
-	char *vlc="vlc\n", *vlcv="vlc --version\n";
+	//Parsing
+	char *vlc="vlc\n", *vlcv="vlc --version\n", *vlch="vlc --help\n";
 	char *ok="valid command", *nok="not valid command";
 	
 	while(1)
@@ -60,18 +59,23 @@ int main(int argc, char const *argv[])
 		
 		int n;
 		char buffer[256];
+
+		//Recieve
 		bzero(buffer,256);
 		n = read(new_socket,buffer,255);
 		if (n < 0) 
 			printf("ERROR reading from socket");
 		else
 			{
-				// printf("B %s\n",buffer);
-				// printf("%ld\n",strlen(buffer));
-				// printf("V %s\n",vlc);
-				// printf("%ld\n",strlen(vlc));		
-				// printf("%d\n",strcmp(buffer,vlc));		
+				printf("Buffer %s\n",buffer);
+				/*printf("B %s\n",buffer);
+				printf("%ld\n",strlen(buffer));
+				printf("V %s\n",vlc);
+				printf("%ld\n",strlen(vlc));		
+				printf("%d\n",strcmp(buffer,vlc));*/
 			}
+
+		//Action & Send
 		if(!strcmp(buffer,vlc))
 		{
 			send(new_socket,ok,strlen(ok),0);
@@ -84,12 +88,19 @@ int main(int argc, char const *argv[])
 			printf("OK vlc version\n");
 			system(buffer);
 		}
+		else if(!strcmp(buffer,vlch))
+		{
+			send(new_socket,ok,strlen(ok),0);
+			printf("OK vlc help\n");
+			system(buffer);
+		}
 		else
 		{
 			send(new_socket,nok,strlen(nok),0);
-			printf("NOK Message sent\n");
+			printf("Not OK Terminating\n");
 			break;
 		}
 	}
+
 	return 0; 
 } 
